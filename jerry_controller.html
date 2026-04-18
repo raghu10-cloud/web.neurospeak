@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Remote</title>
+    <style>
+        body { 
+            background: #0f172a; 
+            color: #f8fafc; 
+            font-family: system-ui, -apple-system, sans-serif; 
+            text-align: center; 
+            padding: 40px; 
+            margin: 0;
+        }
+        h2 { color: #38bdf8; margin-bottom: 30px; font-weight: 300; letter-spacing: 2px;}
+        #buttons { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+            gap: 15px; 
+            max-width: 800px; 
+            margin: 0 auto; 
+        }
+        .btn { 
+            padding: 20px; 
+            font-size: 18px; 
+            background: #1e293b; 
+            color: #38bdf8; 
+            border: 1px solid #334155; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            transition: all 0.2s;
+            font-weight: bold;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .btn:hover { 
+            background: #38bdf8; 
+            color: #0f172a; 
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(56, 189, 248, 0.4);
+        }
+        .btn:active {
+            transform: translateY(1px);
+        }
+        #status {
+            margin-top: 40px;
+            color: #22c55e;
+            height: 24px;
+            font-family: monospace;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h2>UNIVERSAL TRIGGER (STANDALONE)</h2>
+    <div id="buttons"></div>
+    <div id="status"></div>
+
+    <script>
+        // 10 Independent Priority Buttons
+        const buttonsDiv = document.getElementById('buttons');
+        
+        for(let i = 1; i <= 10; i++) {
+            const btn = document.createElement('button');
+            btn.className = 'btn';
+            btn.innerText = `Priority ${i}`;
+            btn.onclick = () => triggerPriority(i);
+            buttonsDiv.appendChild(btn);
+        }
+
+        // Push directly to Firebase. Does NOT need localhost. Can be run from a phone on 4G.
+        // The Python backend listens to this secretly and resolves Priority -> Word.
+        function triggerPriority(priorityNum) {
+            const FIREBASE_URL = 'https://neurotech-89e25-default-rtdb.firebaseio.com';
+            
+            fetch(`${FIREBASE_URL}/secret.json`, {
+                method: 'PUT',
+                body: JSON.stringify({ priority: priorityNum })
+            }).then(() => {
+                const s = document.getElementById('status');
+                s.innerText = `> Triggered Priority [${priorityNum}] via Cloud`;
+                setTimeout(() => s.innerText = '', 2000);
+            }).catch(e => {
+                const s = document.getElementById('status');
+                s.innerText = `> Error: ${e.message}`;
+                s.style.color = '#ef4444';
+            });
+        }
+    </script>
+</body>
+</html>
