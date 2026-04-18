@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         background: '#020617', // deep black-blue
-        primary: '#00F3FF',   // cyan - signal
+        primary: '#A7F3D0',   // pastel mint - better bg contrast
         secondary: '#8B5CF6', // purple - AI
         alert: '#FF006E',     // pink/red - detection
         warning: '#FACC15',   // yellow - thresholds
