@@ -71,7 +71,7 @@ export default function Dashboard() {
               transition={{ type: 'spring', bounce: 0.5, duration: 0.6 }}
               className="z-10"
             >
-              <h1 className={`text-6xl md:text-8xl font-tech font-bold ${activeWord !== '---' ? 'text-alert drop-shadow-[0_0_30px_rgba(255,0,110,0.8)]' : 'text-primary/70'}`}>
+              <h1 className={`font-tech font-bold transition-all duration-500 ${activeWord !== '---' ? 'text-6xl md:text-8xl text-alert drop-shadow-[0_0_30px_rgba(255,0,110,0.8)]' : 'text-3xl md:text-4xl tracking-widest text-primary/70'}`}>
                 {activeWord !== '---' ? activeWord : `Scanning${dots}`}
               </h1>
             </motion.div>
