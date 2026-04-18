@@ -53,7 +53,7 @@ cd ..
 :: Wait a few seconds for servers to boot, then open browser
 timeout /t 5 /nobreak > NUL
 echo Opening Dashboard in Google Chrome...
-start chrome "http://localhost:3000" || start http://localhost:3000
+start chrome "http://localhost:5173" || start http://localhost:5173
 
 echo =========================================================
 echo       SUCCESS! Everything is running.

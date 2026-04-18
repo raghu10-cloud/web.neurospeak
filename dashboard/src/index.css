@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-textPrimary;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-card/40 backdrop-blur-md border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)];
+  }
+  
+  .neon-text-primary {
+    @apply text-primary drop-shadow-[0_0_8px_rgba(0,243,255,0.8)];
+  }
+  
+  .neon-border-primary {
+    @apply border-primary shadow-[0_0_10px_rgba(0,243,255,0.4)];
+  }
+}

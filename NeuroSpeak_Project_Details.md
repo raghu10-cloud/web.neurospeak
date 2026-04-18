@@ -45,7 +45,7 @@ NeuroSpeak's custom communication mesh relies on a trifecta of dedicated channel
 | **Microcontroller to Backend** | TCP Stream | `9000` | Takes raw strings `v1,v2,v3\n` straight off the ESP32 Wi-Fi antenna into Python memory. |
 | **Backend to Frontend** | WebSockets (Socket.IO) | `8000` | Creates a persistent pipeline blasting the UI with 34Hz graphical mapping arrays. |
 | **REST API Configuration** | HTTP GET/POST | `8000` | Endpoint `/words` is utilized for the React application to sync dynamic noise thresholds. |
-| **Local Web Server** | HTTP | `3000` | Serves the Vite React production dashboard environment. |
+| **Local Web Server** | HTTP | `5173` | Serves the Vite React production dashboard environment. (Can be fully cloud-hosted on Vercel while binding back to local Edge via ngrok URL in the Settings pane). |
 
 *To run this via a LAN connection with the physical Microcontroller, the ESP32 variable `host` IP must be explicitly hard-coded into the `firmware.ino` script (e.g. `192.168.1.53`) to match your Computer's IPv4 WLAN address!*
 

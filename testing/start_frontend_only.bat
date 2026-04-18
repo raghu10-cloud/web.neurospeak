@@ -13,7 +13,7 @@ if not exist "node_modules" (
 
 echo.
 echo [Dashboard] Starting Vite Development Server...
-echo [Dashboard] URL: http://localhost:3000
+echo [Dashboard] URL: http://localhost:5173
 echo.
 call npm run dev
 

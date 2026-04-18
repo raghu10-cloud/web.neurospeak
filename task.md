@@ -1,5 +1,5 @@
-# Execution Checklist: Push to GitHub
-
-- [x] Add all files to git staging (without using `.gitignore`).
-- [x] Commit the changes.
-- [x] Push to GitHub.
+- [x] Clone / Reset Repository
+- [x] Document frontend features, pages, logic, and graphs in design.md
+- [x] Rebuild Dashboard PWA
+- [x] Update Start_NeuroSpeak.bat frontend launcher scripts
+- [x] Update testing bat script port routing

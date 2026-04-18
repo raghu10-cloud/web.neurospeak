@@ -1,0 +1,11 @@
+# Task: NeuroSpeak PWA UI Rebuild
+- [x] Initialize shadcn/ui and React Bits dependencies
+- [x] Setup Global Context (Connection + Dynamic Backend IP)
+- [x] Develop shared components (TopHeader, PillNav, PixelBlastBackground)
+- [x] Build Login Page (Neon Auth UI)
+- [x] Refactor Dashboard (3 Inline Graphs, Responsive Grid, 30FPS optimized)
+- [x] Build Automate Page (Smart Device Trigger UI)
+- [x] Build Words Configuration Page (Advanced visual Rule Builder)
+- [x] Build Settings Page (Dynamic Backend URL, Firebase toggle)
+- [x] Build About Page 
+- [x] Implement PWA settings (manifest, icons, offline cache)
