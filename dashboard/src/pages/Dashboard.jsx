@@ -1,5 +1,6 @@
 import { useConnection } from '../contexts/ConnectionContext';
 import EMGChart from '../components/dashboard/EMGChart';
+import GridScan from '../components/background/GridScan';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Square, Activity } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -12,11 +13,22 @@ export default function Dashboard() {
   } = useConnection();
   
   const [idleConfig, setIdleConfig] = useState(null);
+  const [activeWord, setActiveWord] = useState('---');
+  const [dots, setDots] = useState('');
+
+  // Scanning dots animation loop
+  useEffect(() => {
+    if (activeWord !== '---') return;
+    const interval = setInterval(() => {
+      setDots(prev => prev.length >= 3 ? '' : prev + '.');
+    }, 400);
+    return () => clearInterval(interval);
+  }, [activeWord]);
 
   // Load idle config to power visual thresh-lines
   useEffect(() => {
     if(!connected) return;
-    fetch('http://localhost:8000/words') // Will eventually map to backendURL from settings, but safe for localhost default here
+    fetch('http://localhost:8000/words') // Will eventually map to backendURL from settings
       .then(r => r.json())
       .then(data => {
         if(data.idle_ranges) {
@@ -26,7 +38,16 @@ export default function Dashboard() {
       .catch(e => console.error(e));
   }, [connected]);
 
-  const mostRecentWord = wordHistory.length > 0 ? wordHistory[0].word : '---';
+  // Display Word cooldown logic (3 seconds)
+  useEffect(() => {
+    if (wordHistory.length > 0) {
+      setActiveWord(wordHistory[0].word);
+      const timer = setTimeout(() => {
+        setActiveWord('---');
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [wordHistory]);
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -35,28 +56,27 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Large Word Display */}
-        <div className="lg:col-span-2 glass rounded-2xl p-8 flex flex-col items-center justify-center min-h-[250px] relative overflow-hidden">
-          <div className="absolute inset-0 bg-primary/5"></div>
-          <h2 className="text-sm font-bold text-primary tracking-widest uppercase mb-4 absolute top-6 left-6 flex items-center space-x-2">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+        <GridScan className="lg:col-span-2 glass rounded-2xl p-8 min-h-[250px]">
+          <h2 className="text-sm font-bold text-primary tracking-widest uppercase mb-4 absolute top-6 left-6 flex items-center space-x-2 z-20">
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_#00f3ff]"></span>
             <span>Live Decoder Engine</span>
           </h2>
           
           <AnimatePresence mode="wait">
             <motion.div
-              key={mostRecentWord}
+              key={activeWord}
               initial={{ scale: 0.8, opacity: 0, filter: "blur(10px)" }}
               animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
               exit={{ scale: 1.1, opacity: 0, filter: "blur(10px)" }}
               transition={{ type: 'spring', bounce: 0.5, duration: 0.6 }}
               className="z-10"
             >
-              <h1 className={`text-6xl md:text-8xl font-tech font-bold ${mostRecentWord !== '---' ? 'text-alert drop-shadow-[0_0_30px_rgba(255,0,110,0.8)]' : 'text-textSecondary/50'}`}>
-                {mostRecentWord}
+              <h1 className={`text-6xl md:text-8xl font-tech font-bold ${activeWord !== '---' ? 'text-alert drop-shadow-[0_0_30px_rgba(255,0,110,0.8)]' : 'text-primary/70'}`}>
+                {activeWord !== '---' ? activeWord : `Scanning${dots}`}
               </h1>
             </motion.div>
           </AnimatePresence>
-        </div>
+        </GridScan>
 
         {/* Small Detection Feed Box */}
         <div className="glass rounded-2xl p-6 flex flex-col h-[250px] overflow-hidden">

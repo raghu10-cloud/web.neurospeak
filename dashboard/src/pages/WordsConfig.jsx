@@ -237,7 +237,7 @@ export default function WordsConfig() {
                     <span className="text-sm font-tech bg-white/10 text-textSecondary px-2 py-1 rounded">PR_{w.priority}</span>
                     <span className="font-bold text-xl text-primary drop-shadow-[0_0_5px_rgba(0,243,255,0.4)]">{w.word}</span>
                   </div>
-                  <button onClick={() => handleDeleteWord(idx)} className="text-textSecondary hover:text-alert opacity-0 group-hover:opacity-100 transition">
+                  <button onClick={() => handleDeleteWord(idx)} className="text-textSecondary hover:text-alert transition">
                     <Trash2 className="w-5 h-5" />
                   </button>
                 </div>
